@@ -54,16 +54,25 @@ function birthdateValidate () {
   return regex.test(birthdateValue);
 }
 
+
   
 function validate () {
   const firstnameValue = firstName.value.trim ();
   const lastNameValue = lastName.value.trim ();
-  const emailValue = eMail.value.trim (); 
   const quantityValue = quantity.value.trim ();
+  const emailValue = eMail.value.trim (); 
+  let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/
 
   if (firstnameValue === "" || firstnameValue.length <= 2) {
     setErrorMessage (first,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.")
   }
+  else if (emailValue.match(regx)){
+    console.log ("Email is true");
+    return true
+  }
+
+  
+  
 
 
   
@@ -80,10 +89,9 @@ function setErrorMessage (input, message) {
 
 
 // form event
-form.addEventListener("submit", function (e){
+form.addEventListener("submit", function (e) {
   e.preventDefault ();
   validate();
-  
    
     
 });

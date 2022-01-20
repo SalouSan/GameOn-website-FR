@@ -17,7 +17,6 @@ const lastName = document.getElementById ("last");
 const eMail = document.getElementById ("email");
 const birthdate = document.getElementById ("birthdate");
 const quantity = document.getElementById("quantity");
-const checkboxInput = document.getElementsByClassName ("checkbox-input");
 const form = document.getElementById ("form");
 const checkbox1 = document.getElementById ('checkbox1');
 const checkbox2 = document.getElementById ('checkbox2');
@@ -48,11 +47,6 @@ const birthdateError = "Vous devez entrer votre date de naissance."
 // function
 
 
-function birthdateValidate () {
-  const birthdateValue = birthdate.value.trim ();
-  let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ 
-  return regex.test(birthdateValue);
-}
 
 
   
@@ -61,30 +55,85 @@ function validate () {
   const lastNameValue = lastName.value.trim ();
   const quantityValue = quantity.value.trim ();
   const emailValue = eMail.value.trim (); 
-  let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/
+  const birthdateValue = birthdate.value.trim ();
+  let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
+  let regexB = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
+  
 
   if (firstnameValue === "" || firstnameValue.length <= 2) {
-    setErrorMessage (first,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.")
+    setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.")
   }
-  else if (emailValue.match(regx)){
-    console.log ("Email is true");
-    return true
+  else {
+    setSuccess (firstName);
   }
 
+  if (lastNameValue === ""|| lastNameValue.length <= 2){
+    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom." )
+  }
+  else {
+    setSuccess (lastName);
+  }
+
+
+  if (emailValue.match(regx)){
+    setSuccess (eMail);
+  }
+  else{
+    setError (eMail,"Veuillez entrer une adresse mail valide")
+  }
+
+  if (birthdateValue.match(regexB)) {
+    setSuccess (birthdate)
+  }
+  else{
+    setError (birthdate, "Vous devez entrer votre date de naissance.")
+  }
+
+  const radioInput = document.reserve.location;
+  let valid = false;
+  for (var i = 0; i<radioInput.length; i++) {
+    if (radioInput[i].checked) {
+      valid = true; 
+      break;
+    }
+  }
+
+  if (valid) {
+    alert ("Successful")
+  }
+  else {
+    alert ("Veuillez choisir une option")
+    return false;
+  }
   
-  
+  if (checkbox1.checked){
+    valid= true;
+  }
+  else {
+    setError (checkbox1,"Veuillez choisir une option.")
+  }
+
+  if (checkbox2.checked) {
+    valid = true;
+  }
 
 
   
 }
 
-function setErrorMessage (input, message) {
+function setError (input, message) {
   const formData = input.parentElement;
-  const errorElement = document.getElementById("error");
+  const errorElement = formData.querySelector("small");
+  errorElement.style.visibility = "visible";
   errorElement.innerText = message;
-
+  
 }
-
+function setSuccess (input) {
+  const formData = input.parentElement;
+  const errorElement = formData.querySelector("small");
+  errorElement.style.visibility = "hidden"
+  errorElement.innerText = "";
+}
  
 
 

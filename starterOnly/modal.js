@@ -68,7 +68,7 @@ function validate () {
   }
 
   if (lastNameValue === ""|| lastNameValue.length <= 2){
-    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom." )
+    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom.")
   }
   else {
     setSuccess (lastName);
@@ -82,11 +82,18 @@ function validate () {
     setError (eMail,"Veuillez entrer une adresse mail valide")
   }
 
-  if (birthdateValue.match(regexB)) {
-    setSuccess (birthdate)
+  if (!birthdateValue.match(regexB)) {
+    setError (birthdate, "Vous devez entrer votre date de naissance.")
   }
   else{
-    setError (birthdate, "Vous devez entrer votre date de naissance.")
+    setSuccess (birthdate);
+  }
+
+  if (quantityValue === ""){
+    setError (quantity, "Vous devez insérer au moins un chiffre")
+  }
+  else {
+    setSuccess (quantity);
   }
 
   const radioInput = document.reserve.location;
@@ -99,22 +106,26 @@ function validate () {
   }
 
   if (valid) {
-    alert ("Successful")
+    console.log("Successful")
   }
   else {
-    alert ("Veuillez choisir une option")
+    console.log ("Veuillez choisir une option")
     return false;
   }
   
   if (checkbox1.checked){
     valid= true;
+    setSuccess (checkbox1)
   }
   else {
-    setError (checkbox1,"Veuillez choisir une option.")
+    setError (checkbox1,"Vous devez vérifier que vous acceptez les termes et conditions.")
   }
 
   if (checkbox2.checked) {
     valid = true;
+  }
+  else {
+    setSuccess (checkbox2)
   }
 
 

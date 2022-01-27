@@ -46,47 +46,48 @@ const verifError = "Vous devez vérifier que vous acceptez les termes et conditi
 const birthdateError = "Vous devez entrer votre date de naissance."
 // function
 
-
-
-
   
 function validate () {
   const firstnameValue = firstName.value.trim ();
   const lastNameValue = lastName.value.trim ();
   const quantityValue = quantity.value.trim ();
   const emailValue = eMail.value.trim (); 
-  const birthdateValue = birthdate.value.trim ();
   let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
-  let regexB = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
+  const birthdateValue = birthdate.value;
+  let regexB = /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
   
+  function firstNameV () {
+    if (firstnameValue.length < 2) {
+      setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
+      firstName.setAttribute ("data-error-visible", "true");
 
-  if (firstnameValue === "" || firstnameValue.length <= 2) {
-    setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.")
-  }
-  else {
-    setSuccess (firstName);
+    }
+    else {
+      setSuccess (firstName);
+    }
   }
 
-  if (lastNameValue === ""|| lastNameValue.length <= 2){
+  if (lastNameValue.length < 2){
     setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom.")
+
   }
   else {
     setSuccess (lastName);
   }
 
-
   if (emailValue.match(regx)){
     setSuccess (eMail);
   }
   else{
-    setError (eMail,"Veuillez entrer une adresse mail valide")
+    setError (eMail,"Veuillez entrer une adresse mail valide");
   }
 
-  if (!birthdateValue.match(regexB)) {
-    setError (birthdate, "Vous devez entrer votre date de naissance.")
+  if (!birthdateValue.match(regexB)){
+    setError (birthdate, "DOB obligatoire");
   }
   else{
     setSuccess (birthdate);
+
   }
 
   if (quantityValue === ""){
@@ -96,29 +97,20 @@ function validate () {
     setSuccess (quantity);
   }
 
-  const radioInput = document.reserve.location;
-  let valid = false;
-  for (var i = 0; i<radioInput.length; i++) {
-    if (radioInput[i].checked) {
-      valid = true; 
-      break;
+  const radioInput = document.querySelector(".checkbox-input[type=radio]")
+   if (!radioInput.checked) {
+      setError (radioInput, "Veuillez choisir une option.");
     }
-  }
-
-  if (valid) {
-    console.log("Successful")
-  }
-  else {
-    console.log ("Veuillez choisir une option")
-    return false;
-  }
+    else {
+      setSuccess (radioInput)
+    }
+  
   
   if (checkbox1.checked){
-    valid= true;
     setSuccess (checkbox1)
   }
   else {
-    setError (checkbox1,"Vous devez vérifier que vous acceptez les termes et conditions.")
+    setError (checkbox1, "Vous devez vérifier que vous acceptez les termes et conditions.");
   }
 
   if (checkbox2.checked) {
@@ -137,13 +129,18 @@ function setError (input, message) {
   const errorElement = formData.querySelector("small");
   errorElement.style.visibility = "visible";
   errorElement.innerText = message;
+  errorElement.style.color = "red";
+  formData.classList.add("error");
+  formData.classList.remove("success");
   
 }
 function setSuccess (input) {
   const formData = input.parentElement;
   const errorElement = formData.querySelector("small");
-  errorElement.style.visibility = "hidden"
+  errorElement.style.visibility = "hidden";
   errorElement.innerText = "";
+  formData.classList.add("success");
+  formData.classList.remove("error");
 }
  
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
     <title>Reservation</title>
@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="topnav" id="myTopnav">
-      <div class="header-logo">
+      <div class="header-logo"> </div>
       <img alt="logo" src="Logo.png" width="auto" height="auto" />
     </div>
     <div class="main-navbar">
@@ -27,8 +27,6 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-    </div>
-  </div>
     <main>
       <div class="hero-section">
         <div class="hero-content">
@@ -61,10 +59,10 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
+              onsubmit="return validate();" novalidate
             >
               <div
-                class="formData">
+                class="formData" data-error-visible="false" >
                 <label for="first">Prénom</label><br>
                 <input
                   class="text-control"
@@ -187,6 +185,7 @@
                   <span class="checkbox-icon"></span>
                   Portland</label
                 >
+                <br/>
                 <small>Error message</small>
               </div>
 
@@ -214,7 +213,6 @@
               <input
                 class="btn-submit"
                 type="submit"
-                class="button"
                 value="C'est parti"
               />
             </form>

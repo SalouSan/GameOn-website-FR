@@ -229,6 +229,12 @@ input {
 .formData small {
   visibility: hidden;
 }
+.formData.success input {
+  border: 2px solid #09c372;
+}
+.formData.error input {
+  border: 2px solid #ff3860;
+}
 /* 
 input[data-error]::after {
     content: attr(data-error);

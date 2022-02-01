@@ -223,9 +223,7 @@ input {
 .formData[data-error-visible="true"]::after {
   opacity: 1;
 }
-.formData[data-error-visible="true"] .text-control {
-  border: 2px solid #e54858;
-}
+
 .formData small {
   visibility: hidden;
 }

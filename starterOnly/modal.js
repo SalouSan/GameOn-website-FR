@@ -54,70 +54,83 @@ const birthdateError = "Vous devez entrer votre date de naissance."
 function firstValidate () {
   const firstnameValue = firstName.value.trim ();
   if (firstnameValue.length < 2) {
-    setSuccess (firstName)
+    return false
+  }
+  else {
+    return true 
   }
 }
 function lastValidate () {
   const lastNameValue = lastName.value.trim ();
   if (lastNameValue.length < 2){
-    setSuccess (lastName)
+    return false
+  }
+  else {
+    return true 
   }
 }
 function emailValidate () {
   const emailValue = eMail.value.trim (); 
   let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
   if (emailValue.match(regx)){
-    setSuccess (eMail);
+    return true
   }
   else{
-    setError (eMail,"Veuillez entrer une adresse mail valide");
+    return false
   }
 }
 
 function birthValidate (){
-  if (isNaN (birthdateValue))
-  
-  console.log (regex.test(birthdateValue));
-}
-function quantityValidate (){
-  if (quantityValue === ""){
-    setError (quantity, "Vous devez insérer au moins un chiffre")
+  const birthdateValue = parseInt(birthdate.value)
+  if (isNaN (birthdateValue)) {
+    return false
   }
   else {
-    setSuccess (quantity);
+    return true
+  }
+  
+  
+}
+function quantityValidate (){
+  const quantityValue = quantity.value.trim ();
+  if (quantityValue === ""){
+    return false
+  }
+  else {
+    return true
   }
 }
 
 function radioButtonValidate () {
   const radiosInput = document.querySelector(".checkbox-input[type=radio]")
   if (location1.checked) {
-    setSuccess (location1)
+    return true
   }
   else if (location2.checked) {
-    setSuccess (location2);
+    return true
   }
   else if (location3.checked) {
-    setSuccess (location3);
+    return true
   }
   else if (location4.checked) {
-    setSuccess (location4);
+    return true
   }
   else if (location5.checked) {
-    setSuccess (location5);
+    return true
   }
   else if (location6.checked) {
-    setSuccess (location6);
+    return true
   }
   else {
-    setError (radiosInput,"Veuillez choisir une option.")
+    return false
   }
 }
 function checkboxValidate () {
   if (checkbox1.checked){
-    setSuccess (checkbox1)
+    return true
   }
   else {
-    setError (checkbox1, "Vous devez vérifier que vous acceptez les termes et conditions.");
+    return false
   }
 
   if (checkbox2.checked) {
@@ -130,20 +143,43 @@ function checkboxValidate () {
 
 
 // function validate 
-function validate () {
-  
-  if (!firstValidate ()) {
-    setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
+function validate () {  
+  if (firstValidate ()) {
+    setSuccess (firstName);
   }
   else{
-    return true
+    setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
   }
 
-  if (!lastValidate ()){
-    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  if (lastValidate ()){
+    setSuccess (lastName);
   }
   else {
-    return true
+    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  }
+  if (emailValidate ()) {
+    setSuccess (eMail)
+  }
+  else {
+    setError (eMail,"Veuillez entrer une adresse mail valide.")
+  }
+  if (birthValidate ()) {
+    setSuccess (birthdate)
+  }
+  else {
+    setError (birthdate, "Vous devez entrer votre date de naissance.")
+  }
+  if (quantityValidate ()){
+    setSuccess (quantity)
+  }
+  else {
+    setError (quantity,"Vous devez insérer au moins un chiffre.")
+  }
+  if (radioButtonValidate ()){
+    setSuccess (location1, location2, location3, location4, location5, location6)
+  }
+  else {
+    setError (radiosInput,"Vous devez choisir une option.")
   }
 
   /* if (firstnameValue.length < 2) {

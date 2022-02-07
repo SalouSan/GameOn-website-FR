@@ -18,6 +18,7 @@ const eMail = document.getElementById ("email");
 const birthdate = document.getElementById ("birthdate");
 const quantity = document.getElementById("quantity");
 const form = document.getElementById ("form");
+const radiosInput = document.querySelector(".checkbox-input[type=radio]");
 const checkbox1 = document.getElementById ('checkbox1');
 const checkbox2 = document.getElementById ('checkbox2');
 const location1 = document.getElementById ('location1');
@@ -80,7 +81,21 @@ function emailValidate () {
   }
 }
 
-function birthValidate (){
+function birthValidate1 (){
+  const birthdateValue = birthdate.value.trim ();
+  let regexB = /^\d{4}-\d{2}-\d{2}$/;
+  if (regexB.test(birthdateValue)) {
+    return true
+  }
+  else {
+    return false
+  }
+  
+  
+}
+
+
+/* function birthValidate (){
   const birthdateValue = parseInt(birthdate.value)
   if (isNaN (birthdateValue)) {
     return false
@@ -90,7 +105,12 @@ function birthValidate (){
   }
   
   
-}
+} */
+
+
+
+
+
 function quantityValidate (){
   const quantityValue = quantity.value.trim ();
   if (quantityValue === ""){
@@ -102,7 +122,6 @@ function quantityValidate (){
 }
 
 function radioButtonValidate () {
-  const radiosInput = document.querySelector(".checkbox-input[type=radio]")
   if (location1.checked) {
     return true
   }
@@ -132,12 +151,13 @@ function checkboxValidate () {
   else {
     return false
   }
-
+}
+function checkbox2Validate () {
   if (checkbox2.checked) {
-    valid = true;
+    return true
   }
   else {
-    setSuccess (checkbox2)
+    return true
   }
 }
 
@@ -163,7 +183,9 @@ function validate () {
   else {
     setError (eMail,"Veuillez entrer une adresse mail valide.")
   }
-  if (birthValidate ()) {
+  const birthdateValue = birthdate.value.trim ();
+  let regexB = /^\d{4}-\d{2}-\d{2}$/;
+  if (regexB.test(birthdateValue)) {
     setSuccess (birthdate)
   }
   else {
@@ -176,10 +198,26 @@ function validate () {
     setError (quantity,"Vous devez insérer au moins un chiffre.")
   }
   if (radioButtonValidate ()){
-    setSuccess (location1, location2, location3, location4, location5, location6)
+    setSuccess (radiosInput)
   }
   else {
-    setError (radiosInput,"Vous devez choisir une option.")
+    setError (radiosInput, "Vous devez choisir une option.");
+  }
+  if (checkboxValidate()) {
+    setSuccess (checkbox1)
+  }
+  else {
+    setError (checkbox1, "Vous devez vérifier que vous acceptez les termes et conditions.")
+  }
+  
+  if (firstValidate () && lastValidate () && emailValidate () && quantityValidate () && radioButtonValidate () && checkboxValidate ()){
+  succesMessage ();
+  }
+
+  function succesMessage () {
+    const isValidMessage = document.getElementById ("modalmsg");
+    isValidMessage.style.visibility = "visible";
+    isValidMessage.innerText = "Merci ! Votre réservation a été reçue."
   }
 
   /* if (firstnameValue.length < 2) {
@@ -263,6 +301,8 @@ function setError (input, message) {
   errorElement.style.color = "red";
   formData.classList.add("error");
   formData.classList.remove("success");
+  const isValidMessage = document.getElementById ("modalmsg");
+  isValidMessage.style.visibility = "hidden";
   
 }
 function setSuccess (input) {
@@ -272,6 +312,8 @@ function setSuccess (input) {
   errorElement.innerText = "";
   formData.classList.add("success");
   formData.classList.remove("error");
+  const isValidMessage = document.getElementById ("modalmsg");
+  isValidMessage.style.visibility = "hidden";
 }
  
 

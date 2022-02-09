@@ -95,21 +95,17 @@ function birthValidate1 (){
 }
 
 
-/* function birthValidate (){
-  const birthdateValue = parseInt(birthdate.value)
-  if (isNaN (birthdateValue)) {
-    return false
-  }
-  else {
+function birthValidate (){
+  const birthdateValue = birthdate.value.trim ();
+  let regexB = /^\d{4}-\d{2}-\d{2}$/;
+  if (regexB.test(birthdateValue))  {
     return true
   }
+  else {
+    return false
+  }  
   
-  
-} */
-
-
-
-
+}
 
 function quantityValidate (){
   const quantityValue = quantity.value.trim ();
@@ -183,9 +179,7 @@ function validate () {
   else {
     setError (eMail,"Veuillez entrer une adresse mail valide.")
   }
-  const birthdateValue = birthdate.value.trim ();
-  let regexB = /^\d{4}-\d{2}-\d{2}$/;
-  if (regexB.test(birthdateValue)) {
+  if (birthValidate()) {
     setSuccess (birthdate)
   }
   else {
@@ -213,84 +207,27 @@ function validate () {
   if (firstValidate () && lastValidate () && emailValidate () && quantityValidate () && radioButtonValidate () && checkboxValidate ()){
   succesMessage ();
   }
+  function closeConfirmModal () {
+    modalbg.style.display = "none";
+  }    
 
-  function succesMessage () {
+  function succesMessage () { 
+    for (let i= 0; i<formData.length; i++ ) {
+    const formData = document.querySelectorAll(".formData");
+    formData[i].style.visibility = "hidden";
+    }
+    const p = document.querySelector (".text-label")
+    p.style.visibility = "hidden";
     const isValidMessage = document.getElementById ("modalmsg");
+    const button = document.getElementById ("btn-close");
     isValidMessage.style.visibility = "visible";
     isValidMessage.innerText = "Merci ! Votre réservation a été reçue."
-  }
-
-  /* if (firstnameValue.length < 2) {
-    setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
-  }
-  else {
-      setSuccess (firstName);
-  }
-
-  if (lastNameValue.length < 2){
-    setError (lastName,"Veuillez entrer 2 caractères ou plus pour le champ du nom.")
-  }
-  else {
-    setSuccess (lastName);
-  }
-  
-  if (emailValue.match(regx)){
-    setSuccess (eMail);
-  }
-  else{
-    setError (eMail,"Veuillez entrer une adresse mail valide");
-  }
-  if (isNaN (birthdateValue)){
-    setError (birthdate, "Vous devez entrer votre date de naissance.");
-  }
-  else{
-    setSuccess(birthdate);
-  }
- 
-  if (quantityValue === ""){
-    setError (quantity, "Vous devez insérer au moins un chiffre")
-  }
-  else {
-    setSuccess (quantity);
-  }
-
-  const radiosInput = document.querySelector(".checkbox-input[type=radio]")
-  if (location1.checked) {
-    setSuccess (location1)
-  }
-  else if (location2.checked) {
-    setSuccess (location2);
-  }
-  else if (location3.checked) {
-    setSuccess (location3);
-  }
-  else if (location4.checked) {
-    setSuccess (location4);
-  }
-  else if (location5.checked) {
-    setSuccess (location5);
-  }
-  else if (location6.checked) {
-    setSuccess (location6);
-  }
-  else {
-    setError (radiosInput,"Veuillez choisir une option." )
+    button.style.visibility = "visible";
+    const btnCparti = document.querySelector(".btn-submit");
+    btnCparti.style.visibility = "hidden";
+    button.addEventListener ("click", closeConfirmModal ());
   }
     
-  if (checkbox1.checked){
-    setSuccess (checkbox1)
-  }
-  else {
-    setError (checkbox1, "Vous devez vérifier que vous acceptez les termes et conditions.");
-  }
-
-  if (checkbox2.checked) {
-    valid = true;
-  }
-  else {
-    setSuccess (checkbox2)
-  }  */
-  
 }
 
 function setError (input, message) {
@@ -303,6 +240,8 @@ function setError (input, message) {
   formData.classList.remove("success");
   const isValidMessage = document.getElementById ("modalmsg");
   isValidMessage.style.visibility = "hidden";
+  const button = document.getElementById ("btn-close");
+  button.style.visibility= "hidden";
   
 }
 function setSuccess (input) {
@@ -314,6 +253,8 @@ function setSuccess (input) {
   formData.classList.remove("error");
   const isValidMessage = document.getElementById ("modalmsg");
   isValidMessage.style.visibility = "hidden";
+  const button = document.getElementById ("btn-close");
+  button.style.visibility = "hidden";
 }
  
 

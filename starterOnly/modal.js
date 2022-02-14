@@ -27,6 +27,9 @@ const location3 = document.getElementById ('location3');
 const location4 = document.getElementById ('location4');
 const location5 = document.getElementById ('location5');
 const location6 = document.getElementById ('location6');
+const button = document.getElementById ("btn-close");
+const isValidMessage = document.getElementById ("modalmsg");
+isValidMessage.style.visibility = "hidden";
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -206,29 +209,29 @@ function validate () {
   
   if (firstValidate () && lastValidate () && emailValidate () && quantityValidate () && radioButtonValidate () && checkboxValidate ()){
   succesMessage ();
-  }
-  function closeConfirmModal () {
-    modalbg.style.display = "none";
-  }    
+  }   
 
   function succesMessage () { 
     for (let i= 0; i<formData.length; i++ ) {
     const formData = document.querySelectorAll(".formData");
-    formData[i].style.visibility = "hidden";
+    formData[i].style.display= "none";
     }
     const p = document.querySelector (".text-label")
-    p.style.visibility = "hidden";
+    p.style.display= "none";
     const isValidMessage = document.getElementById ("modalmsg");
-    const button = document.getElementById ("btn-close");
     isValidMessage.style.visibility = "visible";
     isValidMessage.innerText = "Merci ! Votre réservation a été reçue."
-    button.style.visibility = "visible";
+    button.style.visibility= "visible";
     const btnCparti = document.querySelector(".btn-submit");
-    btnCparti.style.visibility = "hidden";
-    button.addEventListener ("click", closeConfirmModal ());
+    btnCparti.style.display = "none";
   }
-    
+  button.addEventListener("click", () =>{
+    modalbg.style.display = "none";
+  })
+
 }
+
+
 
 function setError (input, message) {
   const formData = input.parentElement;
@@ -238,8 +241,6 @@ function setError (input, message) {
   errorElement.style.color = "red";
   formData.classList.add("error");
   formData.classList.remove("success");
-  const isValidMessage = document.getElementById ("modalmsg");
-  isValidMessage.style.visibility = "hidden";
   const button = document.getElementById ("btn-close");
   button.style.visibility= "hidden";
   
@@ -251,8 +252,6 @@ function setSuccess (input) {
   errorElement.innerText = "";
   formData.classList.add("success");
   formData.classList.remove("error");
-  const isValidMessage = document.getElementById ("modalmsg");
-  isValidMessage.style.visibility = "hidden";
   const button = document.getElementById ("btn-close");
   button.style.visibility = "hidden";
 }

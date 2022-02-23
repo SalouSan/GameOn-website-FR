@@ -30,6 +30,7 @@ const location6 = document.getElementById ('location6');
 const button = document.getElementById ("btn-close");
 const isValidMessage = document.getElementById ("modalmsg");
 isValidMessage.style.visibility = "hidden";
+button.style.visibility= "hidden";
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -54,7 +55,7 @@ const error2 = "Veuillez entrer 2 caractères ou plus pour le champ du nom."
 const errorOption = "Vous devez choisir une option.";
 const verifError = "Vous devez vérifier que vous acceptez les termes et conditions.";
 const birthdateError = "Vous devez entrer votre date de naissance."
-// function
+// Validation function prenom
 function firstValidate () {
   const firstnameValue = firstName.value.trim ();
   if (firstnameValue.length < 2) {
@@ -64,6 +65,7 @@ function firstValidate () {
     return true 
   }
 }
+// Validation du nom
 function lastValidate () {
   const lastNameValue = lastName.value.trim ();
   if (lastNameValue.length < 2){
@@ -73,6 +75,7 @@ function lastValidate () {
     return true 
   }
 }
+// Validation de email
 function emailValidate () {
   const emailValue = eMail.value.trim (); 
   let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
@@ -84,20 +87,7 @@ function emailValidate () {
   }
 }
 
-function birthValidate1 (){
-  const birthdateValue = birthdate.value.trim ();
-  let regexB = /^\d{4}-\d{2}-\d{2}$/;
-  if (regexB.test(birthdateValue)) {
-    return true
-  }
-  else {
-    return false
-  }
-  
-  
-}
-
-
+// Validation date de naissance
 function birthValidate (){
   const birthdateValue = birthdate.value.trim ();
   let regexB = /^\d{4}-\d{2}-\d{2}$/;
@@ -109,7 +99,7 @@ function birthValidate (){
   }  
   
 }
-
+// Validation nombre de tournois 
 function quantityValidate (){
   const quantityValue = quantity.value.trim ();
   if (quantityValue === ""){
@@ -119,7 +109,7 @@ function quantityValidate (){
     return true
   }
 }
-
+// Validation radio boutons
 function radioButtonValidate () {
   if (location1.checked) {
     return true
@@ -143,6 +133,7 @@ function radioButtonValidate () {
     return false
   }
 }
+// Validation conditions genérales et prochains evenements 
 function checkboxValidate () {
   if (checkbox1.checked){
     return true
@@ -161,7 +152,7 @@ function checkbox2Validate () {
 }
 
 
-// function validate 
+// function validate : verifier les fonctions des differents inputs
 function validate () {  
   if (firstValidate ()) {
     setSuccess (firstName);
@@ -169,7 +160,6 @@ function validate () {
   else{
     setError (firstName,"Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
   }
-
   if (lastValidate ()){
     setSuccess (lastName);
   }
@@ -210,7 +200,7 @@ function validate () {
   if (firstValidate () && lastValidate () && emailValidate () && quantityValidate () && radioButtonValidate () && checkboxValidate ()){
   succesMessage ();
   }   
-
+// Message succes 
   function succesMessage () { 
     for (let i= 0; i<formData.length; i++ ) {
     const formData = document.querySelectorAll(".formData");
@@ -232,7 +222,7 @@ function validate () {
 }
 
 
-
+// message d'erreurs et de validations
 function setError (input, message) {
   const formData = input.parentElement;
   const errorElement = formData.querySelector("small");
@@ -258,7 +248,7 @@ function setSuccess (input) {
  
 
 
-// form event
+// form event listener
 form.addEventListener("submit", function (e) {
   e.preventDefault ();
   validate();
